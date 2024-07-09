@@ -1,5 +1,4 @@
 export const abi = [
-  [
     {
       inputs: [
         { internalType: 'address', name: 'baseFactory', type: 'address' },
@@ -82,5 +81,4 @@ export const abi = [
       type: 'function',
     },
     { stateMutability: 'payable', type: 'receive' },
-  ],
-] as const
+  ] as const;
