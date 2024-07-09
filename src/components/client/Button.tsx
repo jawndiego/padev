@@ -19,43 +19,34 @@ export function Button() {
   }
 
   const { isLoading: isConfirming, isSuccess: isConfirmed } =
-    useWaitForTransactionReceipt({
-      hash,
-    })
+    useWaitForTransactionReceipt({ hash })
 
   return (
-    <div className="fixed inset-0 flex justify-center items-center bg-white">
-      <form onSubmit={submit} className="w-64 space-y-4">
-        <div>
-          <input
-            id="count"
-            name="count"
-            type="number"
-            min="1"
-            value={count}
-            onChange={(e) => setCount(parseInt(e.target.value, 10))}
-            required
-            className="w-full px-3 py-2 border-b border-gray-300 focus:border-gray-700 focus:outline-none text-center"
-            placeholder="# of mints"
-          />
-        </div>
+    <div className="flex justify-center items-center w-full h-full fixed">
+      <form onSubmit={submit} className="flex flex-col items-center max-w-xs">
+        <input
+          type="number"
+          min="1"
+          value={count}
+          onChange={(e) => setCount(parseInt(e.target.value, 10))}
+          required
+          className="w-64 h-24 text-center text-2xl font-extralight bg-transparent border-b border-stone-200 focus:outline-none focus:border-stone-400 transition-colors duration-300"
+        />
         <button
           disabled={isPending}
           type="submit"
-          className={`w-full py-2 text-black font-medium rounded-none transition-colors ${
-            isPending ? 'bg-gray-100 cursor-not-allowed' : 'bg-white hover:bg-gray-50'
+          className={`w-64 h-24 text-lg font-light rounded-full transition-all duration-300 flex items-center justify-center ${
+            isPending ? 'text-stone-300' : 'text-stone-500 hover:text-stone-700'
           }`}
         >
-          {isPending ? '...' : 'mint'}
+          {isPending ? '・' : 'mint'}
         </button>
-        {(hash || isConfirming || isConfirmed || error) && (
-          <div className="text-xs text-center text-gray-500 mt-2">
-            {hash && 'Transaction sent'}
-            {isConfirming && 'Confirming...'}
-            {isConfirmed && 'Confirmed'}
-            {error && ((error as BaseError).shortMessage || 'Error occurred')}
-          </div>
-        )}
+        <div className="text-center text-xs text-stone-400 h-8">
+          {hash && <div className="break-all">{hash.slice(0, 10)}...{hash.slice(-8)}</div>}
+          {isConfirming && <div>Confirming...</div>}
+          {isConfirmed && <div>Confirmed</div>}
+          {error && <div>{(error as BaseError).shortMessage || error.message}</div>}
+        </div>
       </form>
     </div>
   )

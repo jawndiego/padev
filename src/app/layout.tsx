@@ -16,7 +16,6 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${satoshi.variable}`}>
       <body>
-        <GridPattern />
         <Providers>{children}</Providers>
       </body>
     </html>
